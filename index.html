@@ -9,17 +9,50 @@
         /* Base styles for the body and html to ensure full viewport usage */
         body {
             margin: 0;
-            overflow: hidden; /* Hide scrollbars for the main page to keep it fixed */
+            overflow: hidden; /* No scrolling on the body */
             height: 100vh; /* Full viewport height */
-            background-color: white; /* White background */
+            background-color: white;
             font-family: "Inter", sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Space content vertically */
+            justify-content: space-between;
             align-items: center;
-            color: #0044cb; /* Main blue for text */
-            cursor: default; /* Ensure the cursor is always an arrow, preventing hover issues with the fly */
+            color: #0044cb;
+            cursor: default;
         }
+        
+        .main-content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
+            /* Added min-height to ensure it takes up space even on small screens */
+            min-height: 1px;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 1.5rem; /* Reduced padding further for mobile */
+            background-color: white;
+            box-shadow: 8px 8px 0px 0px #0044cb;
+            max-width: 600px;
+            width: 90%;
+            border: 2px solid #0044cb;
+            /* Adjusted max-height to ensure content fits */
+            max-height: 80vh; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        /* Fly and Trail styles remain unchanged */
         .fly {
             position: absolute;
             width: 40px;
@@ -30,87 +63,65 @@
             justify-content: center;
             align-items: center;
             z-index: 100;
-            /* Make the fly unclickable */
             pointer-events: none;
         }
-        /* Added a white drop-shadow to create a stroke-like effect for visibility */
         .fly img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             filter: drop-shadow(0px 0px 1px white) drop-shadow(0px 0px 1px white);
         }
-
-        /* Styles for the main content container - Brutalist Design */
-        .container {
-            position: relative;
-            z-index: 1; /* Ensure content is above the trail */
-            text-align: center;
-            padding: 4rem; /* Increased padding for bold, blocky look */
-            background-color: white; /* White background */
-            box-shadow: 8px 8px 0px 0px #0044cb; /* Brutalist-style offset shadow */
-            max-width: 600px;
-            width: 90%;
-            border: 2px solid #0044cb; /* Thicker, sharp border */
-            /* Removed flex-grow: 1 to prevent it from filling the space */
-            margin-top: 4rem; /* Added margin to create space above */
-            margin-bottom: 4rem; /* Added margin to create space below */
-            overflow-y: auto; /* Adds a scrollbar to the container if its content overflows */
-        }
         
-        /* Styles for form elements - input and textarea */
+        /* Form elements and services styling adjusted for better mobile fit */
         .contact-form input[type="text"],
         .contact-form input[type="email"],
         .contact-form textarea {
             width: 100%;
-            padding: 1rem;
+            padding: 0.5rem; /* Reduced padding */
             border: 2px solid #0044cb;
             border-radius: 0;
-            font-size: 1.125rem;
+            font-size: 0.9rem;
             color: #0044cb;
             background-color: white;
-            margin-bottom: 1rem; /* Space between fields */
+            margin-bottom: 0.5rem;
         }
 
-        /* Styles for the button - Sharp Edges */
         .contact-form button {
             width: 100%;
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1rem;
             background-color: #0044cb;
             color: white;
             border: none;
             border-radius: 0;
             cursor: pointer;
             transition: background-color 0.1s ease;
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
         }
 
-        /* Hover effect for the button - Brutalist style */
         .contact-form button:hover {
             background-color: #0033a0;
             transform: translate(2px, 2px);
             box-shadow: none;
         }
 
-        /* Styles for the service checkboxes */
         .service-checkboxes {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 0.25rem; /* Reduced gap further */
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
         }
         .service-checkboxes label {
             display: flex;
             align-items: center;
-            font-size: 1rem;
             cursor: pointer;
         }
         .service-checkboxes input[type="checkbox"] {
-            margin-right: 0.5rem;
-            width: 20px;
-            height: 20px;
+            margin-right: 0.25rem;
+            width: 14px;
+            height: 14px;
             border: 2px solid #0044cb;
             appearance: none;
             -webkit-appearance: none;
@@ -119,7 +130,6 @@
             cursor: pointer;
             position: relative;
         }
-        /* Checkbox checkmark style */
         .service-checkboxes input[type="checkbox"]:checked:after {
             content: '✔';
             color: white;
@@ -131,27 +141,30 @@
             width: 100%;
             height: 100%;
             text-align: center;
-            line-height: 1; /* Center the checkmark vertically */
+            line-height: 1;
         }
-
-        /* Responsive adjustments for the contact form */
-        @media (max-width: 640px) {
+        
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
             .container {
-                padding: 2rem;
+                max-height: calc(100vh - 120px); /* Adjust height to make sure footer is visible */
+            }
+            .service-checkboxes {
+                font-size: 0.75rem;
+            }
+            .contact-form input, .contact-form textarea {
+                font-size: 0.8rem;
+                padding: 0.4rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header with the logo/brand name -->
-    <header class="w-full p-4 text-center bg-white shadow-md z-20 border-b-2 border-[#0044cb]">
-        <!-- Logo image - made larger with h-16 and w-auto -->
-        <img src="https://i.ibb.co/DDNShDkV/onthewall-circle.png" alt="ONTHEWALL Logo" class="h-16 mx-auto w-auto">
+    <header class="w-full p-2 text-center bg-white shadow-md z-20 border-b-2 border-[#0044cb]">
+        <img src="https://i.ibb.co/DDNShDkV/onthewall-circle.png" alt="ONTHEWALL Logo" class="h-12 mx-auto w-auto">
     </header>
 
-    <!-- The SVG trail is placed BEFORE the fly div and has a lower z-index to ensure it is always behind it -->
     <svg id="fly-trail" style="position:absolute;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:90;">
-        <!-- New path for the white stroke behind the main trail -->
         <path id="trail-path-stroke"
             d=""
             stroke="white"
@@ -171,37 +184,29 @@
         />
     </svg>
 
-    <!-- The animated flying element -->
     <div class="fly">
         <img src="https://i.ibb.co/tP2gP6p7/fly-vector.webp" alt="Flying element icon" onerror="this.src='https://placehold.co/40x40/0044cb/ffffff?text=Fly'">
     </div>
 
-    <!-- Main content container for the landing page -->
-    <div class="container">
-        <div>
-            <!-- Company Name -->
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-[#0044cb]">ONTHEWALL</h1>
-            <!-- Company Tagline -->
-            <p class="text-xl md:text-2xl mb-6 text-[#0044cb] font-bold">DIGITAL MARKETING AND DESIGN</p>
-            <!-- Services Section -->
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-8 text-xl font-bold">
-                <span class="text-[#0044cb]">DESIGN</span>
-                <span class="text-[#0044cb]">DIGITAL MARKETING</span>
-                <span class="text-[#0044cb]">WEB DEVELOPMENT</span>
+    <div class="main-content-wrapper">
+        <div class="container">
+            <h1 class="text-2xl md:text-3xl font-extrabold mb-2 text-[#0044cb]">ONTHEWALL</h1>
+            <div class="flex flex-wrap justify-center items-center gap-1 mb-4 text-xs md:text-base font-bold">
+                <span>DESIGN</span>
+                <span>DIGITAL MARKETING</span>
+                <span>WEB DEVELOPMENT</span>
             </div>
-            <!-- Contact Form Description -->
-            <p class="mb-8 text-lg text-gray-800">
-                Ready to take your brand to the next level? Fill out the form below to get in touch with our team about our services.
+            <p class="mb-4 text-sm text-gray-800">
+                Ready to take your brand to the next level?
             </p>
-            <!-- Contact Form -->
-            <form class="contact-form flex flex-col items-center justify-center space-y-4 my-8" action="#" method="POST">
+            <form class="contact-form flex flex-col items-center justify-center space-y-2 my-2" action="#" method="POST">
                 <input type="text" placeholder="YOUR NAME" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
                 <input type="text" placeholder="YOUR COMPANY" class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
                 <input type="email" placeholder="YOUR EMAIL ADDRESS" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
-                <textarea placeholder="YOUR MESSAGE" rows="4" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none"></textarea>
+                <textarea placeholder="YOUR MESSAGE" rows="3" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none"></textarea>
                 
-                <h3 class="text-lg font-bold mb-2">Interested in:</h3>
-                <div class="service-checkboxes mb-4">
+                <h3 class="text-sm font-bold mb-1">Interested in:</h3>
+                <div class="service-checkboxes mb-2">
                     <label>
                         <input type="checkbox" name="services" value="Brand Design">
                         Brand Design
@@ -225,38 +230,30 @@
         </div>
     </div>
 
-    <!-- Footer with email, social icons, and copyright -->
-    <footer class="w-full p-6 text-[#0044cb] bg-white text-sm md:text-base z-20 border-t-2 border-[#0044cb]">
+    <!-- The footer is now styled to be more compact on mobile -->
+    <footer class="w-full p-2 text-[#0044cb] bg-white text-xs md:text-sm z-20 border-t-2 border-[#0044cb]">
         <div class="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
-            <!-- Email link -->
-            <div class="mb-4 md:mb-0">
-                <a href="mailto:info@onthewall.com" class="hover:underline">INFO@ONTHEWALL.COM</a>
+            <div class="mb-1 md:mb-0">
+                <a href="mailto:info@onthewall.com" class="hover:underline">INFO@ONTHEWALL.SITE</a>
             </div>
-            
-            <!-- Social media icons -->
-            <div class="flex space-x-4 mb-4 md:mb-0">
-                <!-- Twitter -->
+            <div class="flex space-x-2 mb-1 md:mb-0">
                 <a href="#" aria-label="Twitter" class="hover:opacity-75">
-                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.564-2.005.974-3.127 1.195a4.959 4.959 0 00-8.465 4.523c-4.156-.21-7.864-2.203-10.334-5.23a4.962 4.962 0 00-.665 2.477c0 1.716.87 3.232 2.188 4.128a4.92 4.92 0 01-2.23-.616v.06a4.96 4.96 0 003.982 4.862 4.93 4.93 0 01-2.221.084 4.96 4.96 0 004.624 3.447A9.974 9.974 0 010 20.375a14.075 14.075 0 007.64 2.24c9.165 0 14.186-7.593 14.186-14.186 0-.216-.005-.432-.015-.646a10.172 10.172 0 002.493-2.583z"/>
                     </svg>
                 </a>
-                <!-- Instagram -->
                 <a href="#" aria-label="Instagram" class="hover:opacity-75">
-                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2.163c3.204 0 3.584.013 4.85.074 1.22.062 1.83.255 2.228.41a3.527 3.527 0 011.916 1.916c.155.398.348 1.008.41 2.228.061 1.266.074 1.646.074 4.85s-.013 3.584-.074 4.85c-.062 1.22-.255 1.83-.41 2.228a3.527 3.527 0 01-1.916 1.916c-.398.155-1.008.348-2.228.41-.061 1.266-.074 1.646-.074 4.85s.013 3.584.074 4.85c.062 1.22.255 1.83.41 2.228a3.527 3.527 0 011.916-1.916c.398-.155 1.008-.348 2.228-.41C8.416 2.176 8.796 2.163 12 2.163zm0-2.163c-3.298 0-3.682.013-4.996.074-1.28.062-2.15.267-2.903.555a5.523 5.523 0 00-2.02 1.139C.493 2.946.25 3.843.14 5.093c-.061 1.31-.074 1.693-.074 4.996s.013 3.682.074 4.996c.061 1.31.256 2.18.555 2.903a5.523 5.523 0 001.139 2.02c.723.299 1.593.542 2.903.603 1.31.061 1.693.074 4.996.074s3.682-.013 4.996-.074c1.31-.061 2.18-.256 2.903-.555a5.523 5.523 0 002.02-1.139c.847-.487 1.36-.888 1.603-1.286.299-.723.542-1.593.603-2.903.061-1.31.074-1.693.074-4.996s-.013-3.682-.074-4.996c-.061-1.31-.256-2.18-.555-2.903a5.523 5.523 0 00-1.139-2.02C21.054.493 20.157.25 18.907.14c-1.31-.061-1.693-.074-4.996-.074zm-2 2.883a7.117 7.117 0 110 14.234A7.117 7.117 0 0110 5.047zm0 2.138a4.979 4.979 0 100 9.957 4.979 4.979 0 000-9.957zm6.758-.513a1.267 1.267 0 110 2.534 1.267 1.267 0 010-2.534z"/>
                     </svg>
                 </a>
-                <!-- LinkedIn -->
                 <a href="#" aria-label="LinkedIn" class="hover:opacity-75">
-                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22.23 0H1.77A1.77 1.77 0 000 1.77v20.46A1.77 1.77 0 001.77 24h20.46A1.77 1.77 0 0024 22.23V1.77A1.77 1.77 0 0022.23 0zM7.05 20.46H3.5V9h3.55v11.46zM5.27 7.55c-1.16 0-2.1-.94-2.1-2.1 0-1.16.94-2.1 2.1-2.1s2.1.94 2.1 2.1c0 1.16-.94 2.1-2.1 2.1zm15.19 12.91h-3.55V14c0-1.3-.47-2.19-1.61-2.19-1.22 0-1.94.85-1.94 2.16v6.5h-3.56s.05-10.45 0-11.46H14.1s.05 1.58 0 2.5v.1c.54-.78 1.49-1.9 3.37-1.9 2.45 0 4.2 1.63 4.2 5.17v5.59z"/>
                     </svg>
                 </a>
             </div>
-            
-            <!-- Copyright notice -->
-            <div class="mt-4 md:mt-0">
+            <div class="mt-1 md:mt-0">
                 &copy; 2025 ONTHEWALL. All Rights Reserved.
             </div>
         </div>
@@ -267,126 +264,98 @@
         const trailPath = document.getElementById('trail-path');
         const trailPathStroke = document.getElementById('trail-path-stroke');
         
-        // --- State variables for the fly's dynamic movement ---
         let flyX = window.innerWidth / 2;
         let flyY = window.innerHeight / 2;
-        let vx = (Math.random() - 0.5) * 2; // Initial random velocity in X
-        let vy = (Math.random() - 0.5) * 2; // Initial random velocity in Y
+        let vx = (Math.random() - 0.5) * 2;
+        let vy = (Math.random() - 0.5) * 2;
         
-        // Decreased max speed for a smoother, less crazy feel
-        const maxSpeed = 2; // Reduced from 3 to 2 for calmer movement
+        const maxSpeed = 2;
         const acceleration = 0.05;
-        // Added friction to make movement feel more natural and less erratic
         const friction = 0.98;
 
-        // --- State variables for cursor interaction ---
         let cursorX = flyX;
         let cursorY = flyY;
         
-        // Tuned repel radius and force for a more responsive but not frantic fly
-        const repelRadius = 150; // Distance at which the fly starts to react
-        const repelForce = 10; // The base strength of the repulsion effect, reduced from 15
+        const repelRadius = 150;
+        const repelForce = 10;
 
-        // --- Event listener for cursor movement ---
         window.addEventListener('mousemove', (e) => {
             cursorX = e.clientX;
             cursorY = e.clientY;
         });
         
-        // --- Trail state variables ---
         const trailPoints = [];
         const numTrailPoints = 25;
         
-        // Tuned elasticity for a smoother trail
         const elasticity = 0.25; 
         
-        // Initialize the trail points
         for (let i = 0; i < numTrailPoints; i++) {
             trailPoints.push({ x: flyX, y: flyY });
         }
         
-        // --- New state variables for advanced movement ---
         let isFlying = true;
         let stoppedTime = 0;
-        const minStoppedDuration = 1000; // Minimum time to stay stopped (1 second)
-        const maxStoppedDuration = 3000; // Maximum time to stay stopped (3 seconds)
+        const minStoppedDuration = 1000;
+        const maxStoppedDuration = 3000;
         let stopDuration = 0;
-        let scaleEffect = 1; // Initial scale
+        let scaleEffect = 1;
         const maxScale = 1.2;
-        const edgeProximity = 100; // Distance from edge to start scaling up
+        const edgeProximity = 100;
         
-        /**
-         * Main animation loop that updates both fly and trail positions.
-         */
         function animate() {
-            // Check if the fly should be moving
             if (isFlying) {
-                // Apply friction to slow the fly down slightly each frame, adding a smoother feel
                 vx *= friction;
                 vy *= friction;
                 
-                // --- Update fly's position based on velocity ---
                 flyX += vx;
                 flyY += vy;
 
-                // --- Check for and apply cursor repulsion ---
                 const dxCursor = flyX - cursorX;
                 const dyCursor = flyY - cursorY;
                 const distance = Math.sqrt(dxCursor * dxCursor + dyCursor * dyCursor);
 
                 if (distance < repelRadius) {
-                    // Calculate repulsion vector and normalize it
                     const repelDirectionX = dxCursor / distance;
                     const repelDirectionY = dyCursor / distance;
-                    
-                    // Repel force is stronger the closer the cursor is
                     const dynamicRepelForce = repelForce * (1 - distance / repelRadius);
-                    
-                    // Add a repulsive force to the fly's velocity
                     vx += repelDirectionX * dynamicRepelForce;
                     vy += repelDirectionY * dynamicRepelForce;
                 } else {
-                    // Apply a slow, random force to simulate natural fly movement
                     vx += (Math.random() - 0.5) * acceleration;
                     vy += (Math.random() - 0.5) * acceleration;
                 }
                 
-                // --- Clamp velocity to max speed for natural movement ---
                 const currentSpeed = Math.sqrt(vx * vx + vy * vy);
                 if (currentSpeed > maxSpeed) {
                     vx = (vx / currentSpeed) * maxSpeed;
                     vy = (vy / currentSpeed) * maxSpeed;
                 }
 
-                // --- Bounce off the screen edges with less jitter ---
                 const flyWidth = fly.offsetWidth;
                 const flyHeight = fly.offsetHeight;
                 
                 let isNearEdge = false;
                 
                 if (flyX <= flyWidth / 2 || flyX >= window.innerWidth - flyWidth / 2) {
-                    vx *= -1; // Reverse X velocity
-                    vx += (Math.random() - 0.5) * 0.5; // Reduced random perturbation
-                    flyX = Math.max(flyWidth / 2, Math.min(flyX, window.innerWidth - flyWidth / 2)); // Clamp position
+                    vx *= -1;
+                    vx += (Math.random() - 0.5) * 0.5;
+                    flyX = Math.max(flyWidth / 2, Math.min(flyX, window.innerWidth - flyWidth / 2));
                     isNearEdge = true;
                 }
                 if (flyY <= flyHeight / 2 || flyY >= window.innerHeight - flyHeight / 2) {
-                    vy *= -1; // Reverse Y velocity
-                    vy += (Math.random() - 0.5) * 0.5; // Reduced random perturbation
-                    flyY = Math.max(flyHeight / 2, Math.min(flyY, window.innerHeight - flyHeight / 2)); // Clamp position
+                    vy *= -1;
+                    vy += (Math.random() - 0.5) * 0.5;
+                    flyY = Math.max(flyHeight / 2, Math.min(flyY, window.innerHeight - flyHeight / 2));
                     isNearEdge = true;
                 }
 
-                // --- Scale effect when near the edges ---
                 if (isNearEdge) {
                     scaleEffect = maxScale;
                 } else {
-                    // Ease the scale back to normal
                     scaleEffect += (1 - scaleEffect) * 0.1;
                 }
 
-                // --- Randomly stop the fly ---
-                if (Math.random() < 0.005) { // 0.5% chance to stop each frame
+                if (Math.random() < 0.005) {
                     isFlying = false;
                     vx = 0;
                     vy = 0;
@@ -394,29 +363,23 @@
                     stopDuration = minStoppedDuration + Math.random() * (maxStoppedDuration - minStoppedDuration);
                 }
 
-            } else { // The fly is not flying (isStopped)
-                // Ease the scale back to normal
+            } else {
                 scaleEffect += (1 - scaleEffect) * 0.1;
 
-                // Check if it's time to start flying again
                 if (performance.now() - stoppedTime > stopDuration) {
                     isFlying = true;
-                    // Give it a new random direction
                     vx = (Math.random() - 0.5) * 2;
                     vy = (Math.random() - 0.5) * 2;
                 }
             }
             
-            // --- Update fly's rotation based on direction ---
             const angle = Math.atan2(flyY - trailPoints[0].y, flyX - trailPoints[0].x);
-            const angleInDegrees = (angle * 180 / Math.PI) + 90; // Add 90 to orient the fly correctly
+            const angleInDegrees = (angle * 180 / Math.PI) + 90;
             fly.style.transform = `translate(-50%, -50%) rotate(${angleInDegrees}deg) scale(${scaleEffect})`;
             
-            // --- Set the fly's position ---
             fly.style.left = `${flyX}px`;
             fly.style.top = `${flyY}px`;
             
-            // --- Update trail points for the elastic effect ---
             trailPoints[0].x += (flyX - trailPoints[0].x) * elasticity;
             trailPoints[0].y += (flyY - trailPoints[0].y) * elasticity;
             
@@ -428,31 +391,25 @@
                 currentPoint.y += (prevPoint.y - currentPoint.y) * elasticity;
             }
             
-            // --- Rebuild the SVG path data for both the main trail and the white stroke ---
             let pathData = `M ${trailPoints[0].x} ${trailPoints[0].y}`;
             for (let i = 1; i < numTrailPoints; i++) {
                 pathData += ` L ${trailPoints[i].x} ${trailPoints[i].y}`;
             }
             trailPath.setAttribute('d', pathData);
-            trailPathStroke.setAttribute('d', pathData); // Update the white stroke path as well
+            trailPathStroke.setAttribute('d', pathData);
 
-            // Request the next animation frame to continue the loop
             requestAnimationFrame(animate);
         }
 
-        // Event listener for window resize to reset trail position
         window.addEventListener('resize', () => {
-            // Re-initialize the trail points to the new center
             for (let i = 0; i < numTrailPoints; i++) {
                 trailPoints[i].x = window.innerWidth / 2;
                 trailPoints[i].y = window.innerHeight / 2;
             }
-            // Reset fly position to center
             flyX = window.innerWidth / 2;
             flyY = window.innerHeight / 2;
         });
 
-        // Start the animation loop when the window loads
         window.onload = function() {
             animate();
         };
