@@ -52,11 +52,10 @@
             max-width: 600px;
             width: 90%;
             border: 2px solid #0044cb; /* Thicker, sharp border */
-            flex-grow: 1; /* Allows the container to fill the available space */
+            /* Removed flex-grow: 1 to prevent it from filling the space */
+            margin-top: 4rem; /* Added margin to create space above */
+            margin-bottom: 4rem; /* Added margin to create space below */
             overflow-y: auto; /* Adds a scrollbar to the container if its content overflows */
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         
         /* Styles for form elements - input and textarea */
@@ -146,8 +145,8 @@
 <body>
     <!-- Header with the logo/brand name -->
     <header class="w-full p-4 text-center bg-white shadow-md z-20 border-b-2 border-[#0044cb]">
-        <!-- Logo image -->
-        <img src="https://i.ibb.co/SX29bX0s/onthewall-circle.png" alt="ONTHEWALL Logo" class="h-10 mx-auto w-auto">
+        <!-- Logo image - made larger with h-16 and w-auto -->
+        <img src="https://i.ibb.co/DDNShDkV/onthewall-circle.png" alt="ONTHEWALL Logo" class="h-16 mx-auto w-auto">
     </header>
 
     <!-- The SVG trail is placed BEFORE the fly div and has a lower z-index to ensure it is always behind it -->
@@ -195,7 +194,7 @@
                 Ready to take your brand to the next level? Fill out the form below to get in touch with our team about our services.
             </p>
             <!-- Contact Form -->
-            <form class="contact-form flex flex-col items-center justify-center" action="#" method="POST">
+            <form class="contact-form flex flex-col items-center justify-center space-y-4 my-8" action="#" method="POST">
                 <input type="text" placeholder="YOUR NAME" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
                 <input type="text" placeholder="YOUR COMPANY" class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
                 <input type="email" placeholder="YOUR EMAIL ADDRESS" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
@@ -231,7 +230,7 @@
         <div class="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
             <!-- Email link -->
             <div class="mb-4 md:mb-0">
-                <a href="mailto:info@onthewall.com" class="hover:underline">INFO@ONTHEWALL.SITE</a>
+                <a href="mailto:info@onthewall.com" class="hover:underline">INFO@ONTHEWALL.COM</a>
             </div>
             
             <!-- Social media icons -->
