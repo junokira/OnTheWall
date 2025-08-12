@@ -10,26 +10,26 @@
         /* Main layout fix: use flexbox to make the header, main content, and footer stick */
         body {
             margin: 0;
-            overflow: hidden; 
+            /* Changed to hide overflow and set fixed height to prevent scrolling */
             height: 100vh;
+            overflow: hidden;
             background-color: white;
             font-family: "Inter", sans-serif;
             display: flex;
             flex-direction: column; /* This is the key change for vertical layout */
-            justify-content: flex-start; /* Aligns items to the top */
+            justify-content: space-between; /* Aligns content and footer at top/bottom */
             align-items: center;
             color: #0044cb;
         }
 
-        /* The main content area now grows to fill available space and handles its own scrolling */
+        /* The main content area now grows to fill available space */
         main {
             flex-grow: 1; /* Allows the main content to take up all available space */
             width: 100%;
-            overflow-y: auto; /* Adds a scrollbar to the main content area only */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align content to the top within the scrollable area */
-            padding: 1rem; /* Added padding to prevent content from touching edges */
+            align-items: center; /* Centered content vertically to prevent top cropping */
+            padding: 1rem; /* Increased padding to give space for the shadow */
         }
         
         .fly {
@@ -53,18 +53,20 @@
         /* Styles for the main content container - Brutalist Design */
         .container {
             text-align: center;
-            padding: 2rem;
+            padding: 1rem; /* Reduced padding for mobile to fit on screen */
             background-color: white;
-            box-shadow: 8px 8px 0px 0px #0044cb;
+            box-shadow: 6px 6px 0px 0px #0044cb; /* Slightly reduced the box shadow */
             max-width: 600px;
             width: 90%;
             border: 2px solid #0044cb;
-            margin: 1rem auto;
-            /* Remove fixed height to allow container to size based on content and flexbox */
+            margin: 0 auto;
         }
         
         /* Media query to adjust padding and font sizes for larger screens */
         @media (min-width: 768px) {
+            main {
+                padding: 1rem;
+            }
             .container {
                 padding: 4rem;
             }
@@ -74,7 +76,7 @@
         .brutalist-input, .brutalist-textarea, .brutalist-button {
             border-radius: 0;
             border: 2px solid #0044cb;
-            font-size: 1rem;
+            font-size: 0.875rem; /* Adjusted font size for mobile */
             color: #0044cb;
             background-color: white;
             transition: all 0.1s ease;
@@ -148,11 +150,11 @@
     <main class="flex-grow flex items-center justify-center w-full">
         <div class="container">
             <!-- Logo image -->
-            <img src="https://i.ibb.co/zTkZbt2Q/wallvec.webp" alt="ONTHEWALL Logo" class="h-10 mx-auto w-auto mb-4">
+            <img src="https://i.ibb.co/zTkZbt2Q/wallvec.webp" alt="ONTHEWALL Logo" class="h-16 mx-auto w-auto mb-4">
             <!-- Company Name -->
             <h1 class="text-3xl md:text-5xl font-extrabold mb-2 text-[#0044cb]">ONTHEWALL</h1>
             <!-- Company Tagline - Made the font size even smaller on mobile -->
-            <p class="text-xs md:text-2xl mb-4 text-[#0044cb] font-bold">DESIGN | DIGITAL MARKETING | WEB DEVELOPMENT</p>
+            <p class="text-sm md:text-2xl mb-4 text-[#0044cb] font-bold">DESIGN | DIGITAL MARKETING | WEB DEVELOPMENT</p>
             <!-- Call to action for the form -->
             <p class="mb-4 text-sm md:text-lg text-gray-800">Ready to take your brand to the next level?</p>
 
@@ -230,7 +232,7 @@
 
     <script>
         const fly = document.querySelector('.fly');
-        const trailPath = document.getElementById('trail-path');
+        const trailPath = document.getElementById('fly-trail');
         
         // --- State variables for the fly's dynamic movement ---
         let flyX = window.innerWidth / 2;
