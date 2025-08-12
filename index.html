@@ -10,26 +10,26 @@
         /* Main layout fix: use flexbox to make the header, main content, and footer stick */
         body {
             margin: 0;
-            /* Changed to hide overflow and set fixed height to prevent scrolling */
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-y: auto;
+            position: relative;
             background-color: white;
             font-family: "Inter", sans-serif;
             display: flex;
-            flex-direction: column; /* This is the key change for vertical layout */
-            justify-content: space-between; /* Aligns content and footer at top/bottom */
+            flex-direction: column; 
+            justify-content: space-between; 
             align-items: center;
             color: #0044cb;
         }
 
         /* The main content area now grows to fill available space */
         main {
-            flex-grow: 1; /* Allows the main content to take up all available space */
+            flex-grow: 1; 
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center; /* Centered content vertically to prevent top cropping */
-            padding: 1rem; /* Increased padding to give space for the shadow */
+            align-items: center; 
+            padding: 1rem; 
         }
         
         .fly {
@@ -37,25 +37,22 @@
             width: 40px;
             height: 40px;
             transform: translate(-50%, -50%);
-            will-change: top, left, transform;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             z-index: 100;
             pointer-events: none;
         }
+        
         .fly img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
-
+        
         /* Styles for the main content container - Brutalist Design */
         .container {
             text-align: center;
-            padding: 1rem; /* Reduced padding for mobile to fit on screen */
+            padding: 1rem; 
             background-color: white;
-            box-shadow: 6px 6px 0px 0px #0044cb; /* Slightly reduced the box shadow */
+            box-shadow: 6px 6px 0px 0px #0044cb; 
             max-width: 600px;
             width: 90%;
             border: 2px solid #0044cb;
@@ -76,7 +73,7 @@
         .brutalist-input, .brutalist-textarea, .brutalist-button {
             border-radius: 0;
             border: 2px solid #0044cb;
-            font-size: 0.875rem; /* Adjusted font size for mobile */
+            font-size: 0.875rem; 
             color: #0044cb;
             background-color: white;
             transition: all 0.1s ease;
@@ -124,7 +121,6 @@
             font-size: 0.8rem;
             line-height: 1;
         }
-        
     </style>
 </head>
 <body>
@@ -135,7 +131,6 @@
             stroke="#0044cb"
             stroke-width="4"
             stroke-linecap="round"
-            stroke-linejoin="round"
             stroke-dasharray="8 8"
             fill="none"
         />
@@ -143,7 +138,7 @@
 
     <!-- The animated flying element -->
     <div class="fly">
-        <img src="https://i.ibb.co/tP2gP6p7/fly-vector.webp" alt="Flying element icon" onerror="this.src='https://placehold.co/40x40/0044cb/ffffff?text=Fly'">
+        <img src="https://i.ibb.co/4Z9p6WYC/fly-vector-final.png" alt="Animated Fly">
     </div>
 
     <!-- Main content container for the landing page -->
@@ -231,49 +226,38 @@
     </footer>
 
     <script>
-        const fly = document.querySelector('.fly');
-        const trailPath = document.getElementById('fly-trail');
-        
-        // --- State variables for the fly's dynamic movement ---
-        let flyX = window.innerWidth / 2;
-        let flyY = window.innerHeight / 2;
-        let vx = (Math.random() - 0.5) * 2; // Initial random velocity in X
-        let vy = (Math.random() - 0.5) * 2; // Initial random velocity in Y
-        const maxSpeed = 3;
+        // --- State variables are now declared outside the function for global access ---
+        let fly, trailPath;
+        let flyX, flyY, vx, vy;
+        let cursorX, cursorY;
+        // Increased the repel radius and force for a stronger avoidance effect
+        const repelRadius = 250; 
+        const repelForce = 15; 
+        const trailPoints = [];
+        const numTrailPoints = 50; 
+        const elasticity = 0.3; 
+        let isFlying = true;
+        let stoppedTime = 0;
+        const minStoppedDuration = 1000;
+        const maxStoppedDuration = 3000;
+        let stopDuration = 0;
         const acceleration = 0.05;
-
-        // --- State variables for cursor interaction ---
-        let cursorX = flyX;
-        let cursorY = flyY;
-        const repelRadius = 150; // Distance at which the fly starts to react
-        const repelForce = 5; // The strength of the repulsion effect
-
-        // --- Event listener for cursor movement ---
+        const maxSpeed = 3;
+        
+        // Event listener for mouse movement to track cursor position
         window.addEventListener('mousemove', (e) => {
             cursorX = e.clientX;
             cursorY = e.clientY;
         });
-        
-        // --- Trail state variables ---
-        const trailPoints = [];
-        const numTrailPoints = 25;
-        const elasticity = 0.15;
-        
-        // Initialize the trail points
-        for (let i = 0; i < numTrailPoints; i++) {
-            trailPoints.push({ x: flyX, y: flyY });
-        }
-        
-        // --- New state variables for advanced movement ---
-        let isFlying = true;
-        let stoppedTime = 0;
-        const minStoppedDuration = 1000; // Minimum time to stay stopped (1 second)
-        const maxStoppedDuration = 3000; // Maximum time to stay stopped (3 seconds)
-        let stopDuration = 0;
-        let scaleEffect = 1; // Initial scale
-        const maxScale = 1.2;
-        const edgeProximity = 100; // Distance from edge to start scaling up
-        
+
+        // Event listener for touch movement to track touch position
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                cursorX = e.touches[0].clientX;
+                cursorY = e.touches[0].clientY;
+            }
+        });
+
         /**
          * Main animation loop that updates both fly and trail positions.
          */
@@ -290,15 +274,14 @@
                 const distance = Math.sqrt(dxCursor * dxCursor + dyCursor * dyCursor);
 
                 if (distance < repelRadius) {
-                    // Calculate repulsion vector and normalize it
                     const repelDirectionX = dxCursor / distance;
                     const repelDirectionY = dyCursor / distance;
                     
-                    // Add a repulsive force to the fly's velocity
+                    // Directly apply a stronger repulsive force when close
                     vx += repelDirectionX * repelForce;
                     vy += repelDirectionY * repelForce;
                 } else {
-                    // Apply a slow, random force to simulate natural fly movement
+                    // Slower random force when far away
                     vx += (Math.random() - 0.5) * acceleration;
                     vy += (Math.random() - 0.5) * acceleration;
                 }
@@ -314,31 +297,19 @@
                 const flyWidth = fly.offsetWidth;
                 const flyHeight = fly.offsetHeight;
                 
-                let isNearEdge = false;
-                
                 if (flyX <= flyWidth / 2 || flyX >= window.innerWidth - flyWidth / 2) {
-                    vx *= -1; // Reverse X velocity
-                    vx += (Math.random() - 0.5) * 2; // Add random perturbation
-                    flyX = Math.max(flyWidth / 2, Math.min(flyX, window.innerWidth - flyWidth / 2)); // Clamp position
-                    isNearEdge = true;
+                    vx *= -1; 
+                    vx += (Math.random() - 0.5) * 2; 
+                    flyX = Math.max(flyWidth / 2, Math.min(flyX, window.innerWidth - flyWidth / 2)); 
                 }
                 if (flyY <= flyHeight / 2 || flyY >= window.innerHeight - flyHeight / 2) {
-                    vy *= -1; // Reverse Y velocity
-                    vy += (Math.random() - 0.5) * 2; // Add random perturbation
-                    flyY = Math.max(flyHeight / 2, Math.min(flyY, window.innerHeight - flyHeight / 2)); // Clamp position
-                    isNearEdge = true;
+                    vy *= -1; 
+                    vy += (Math.random() - 0.5) * 2; 
+                    flyY = Math.max(flyHeight / 2, Math.min(flyY, window.innerHeight - flyHeight / 2)); 
                 }
-
-                // --- Scale effect when near the edges ---
-                if (isNearEdge) {
-                    scaleEffect = maxScale;
-                } else {
-                    // Ease the scale back to normal
-                    scaleEffect += (1 - scaleEffect) * 0.1;
-                }
-
+                
                 // --- Randomly stop the fly ---
-                if (Math.random() < 0.005) { // 0.5% chance to stop each frame
+                if (Math.random() < 0.005) { 
                     isFlying = false;
                     vx = 0;
                     vy = 0;
@@ -347,13 +318,20 @@
                 }
 
             } else { // The fly is not flying (isStopped)
-                // Ease the scale back to normal
-                scaleEffect += (1 - scaleEffect) * 0.1;
+                // When stopped, also check for cursor proximity and start flying immediately if too close
+                const dxCursor = flyX - cursorX;
+                const dyCursor = flyY - cursorY;
+                const distance = Math.sqrt(dxCursor * dxCursor + dyCursor * dyCursor);
 
-                // Check if it's time to start flying again
-                if (performance.now() - stoppedTime > stopDuration) {
+                if (distance < repelRadius) {
                     isFlying = true;
-                    // Give it a new random direction
+                    // Immediately give it a strong repulsive velocity
+                    const repelDirectionX = dxCursor / distance;
+                    const repelDirectionY = dyCursor / distance;
+                    vx = repelDirectionX * maxSpeed * 2;
+                    vy = repelDirectionY * maxSpeed * 2;
+                } else if (performance.now() - stoppedTime > stopDuration) {
+                    isFlying = true;
                     vx = (Math.random() - 0.5) * 2;
                     vy = (Math.random() - 0.5) * 2;
                 }
@@ -361,8 +339,8 @@
             
             // --- Update fly's rotation based on direction ---
             const angle = Math.atan2(flyY - trailPoints[0].y, flyX - trailPoints[0].x);
-            const angleInDegrees = (angle * 180 / Math.PI) + 90; // Add 90 to orient the fly correctly
-            fly.style.transform = `translate(-50%, -50%) rotate(${angleInDegrees}deg) scale(${scaleEffect})`;
+            const angleInDegrees = (angle * 180 / Math.PI) + 90; 
+            fly.style.transform = `translate(-50%, -50%) rotate(${angleInDegrees}deg)`;
             
             // --- Set the fly's position ---
             fly.style.left = `${flyX}px`;
@@ -379,7 +357,7 @@
                 currentPoint.x += (prevPoint.x - currentPoint.x) * elasticity;
                 currentPoint.y += (prevPoint.y - currentPoint.y) * elasticity;
             }
-            
+
             // --- Rebuild the SVG path data ---
             let pathData = `M ${trailPoints[0].x} ${trailPoints[0].y}`;
             for (let i = 1; i < numTrailPoints; i++) {
@@ -393,18 +371,35 @@
 
         // Event listener for window resize to reset trail position
         window.addEventListener('resize', () => {
-            // Re-initialize the trail points to the new center
-            for (let i = 0; i < numTrailPoints; i++) {
-                trailPoints[i].x = window.innerWidth / 2;
-                trailPoints[i].y = window.innerHeight / 2;
-            }
-            // Reset fly position to center
+            // Re-initialize the fly position and the trail points to the new center
             flyX = window.innerWidth / 2;
             flyY = window.innerHeight / 2;
+            for (let i = 0; i < numTrailPoints; i++) {
+                trailPoints[i].x = flyX;
+                trailPoints[i].y = flyY;
+            }
         });
 
         // Start the animation loop when the window loads
         window.onload = function() {
+            // Initialize the global variables here
+            fly = document.querySelector('.fly');
+            trailPath = document.getElementById('trail-path');
+            
+            // Initialize the fly's position and trail points here, where window dimensions are final
+            flyX = window.innerWidth / 2;
+            flyY = window.innerHeight / 2;
+            cursorX = flyX;
+            cursorY = flyY;
+            vx = (Math.random() - 0.5) * 2;
+            vy = (Math.random() - 0.5) * 2;
+            
+            // Populate the trailPoints array
+            for (let i = 0; i < numTrailPoints; i++) {
+                trailPoints.push({ x: flyX, y: flyY });
+            }
+
+            // Start the animation on window load.
             animate();
         };
     </script>
