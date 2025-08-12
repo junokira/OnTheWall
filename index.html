@@ -1,418 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnTheWall - Digital Marketing and Design</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Base styles for the body and html to ensure full viewport usage */
-        body {
-            margin: 0;
-            overflow: hidden; /* No scrolling on the body */
-            height: 100vh; /* Full viewport height */
-            background-color: white;
-            font-family: "Inter", sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            color: #0044cb;
-            cursor: default;
-        }
-        
-        .main-content-wrapper {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 1rem;
-            box-sizing: border-box;
-            /* Added min-height to ensure it takes up space even on small screens */
-            min-height: 1px;
-        }
-        
-        .container {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 1.5rem; /* Reduced padding further for mobile */
-            background-color: white;
-            box-shadow: 8px 8px 0px 0px #0044cb;
-            max-width: 600px;
-            width: 90%;
-            border: 2px solid #0044cb;
-            /* Adjusted max-height to ensure content fits */
-            max-height: 80vh; 
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="ONTHEWALL — Design, Digital Marketing, Web Development. Get in touch to grow your brand." />
+  <title>ONTHEWALL — Digital Marketing & Design</title>
 
-        /* Fly and Trail styles remain unchanged */
-        .fly {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            transform: translate(-50%, -50%);
-            will-change: top, left, transform;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            pointer-events: none;
-        }
-        .fly img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0px 0px 1px white) drop-shadow(0px 0px 1px white);
-        }
-        
-        /* Form elements and services styling adjusted for better mobile fit */
-        .contact-form input[type="text"],
-        .contact-form input[type="email"],
-        .contact-form textarea {
-            width: 100%;
-            padding: 0.5rem; /* Reduced padding */
-            border: 2px solid #0044cb;
-            border-radius: 0;
-            font-size: 0.9rem;
-            color: #0044cb;
-            background-color: white;
-            margin-bottom: 0.5rem;
-        }
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
 
-        .contact-form button {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background-color: #0044cb;
-            color: white;
-            border: none;
-            border-radius: 0;
-            cursor: pointer;
-            transition: background-color 0.1s ease;
-            font-size: 1rem;
-            font-weight: 700;
-        }
+  <!-- Preload key image to avoid flicker -->
+  <link rel="preload" as="image" href="https://i.ibb.co/tP2gP6p7/fly-vector.webp" />
+  <link rel="icon" href="https://i.ibb.co/DDNShDkV/onthewall-circle.png" />
 
-        .contact-form button:hover {
-            background-color: #0033a0;
-            transform: translate(2px, 2px);
-            box-shadow: none;
-        }
+  <style>
+    :root {
+      --brand:#0044cb;
+      --ink:#0f172a;
+      --paper:#ffffff;
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden; /* prevent scroll while the fly roams */
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--brand);
+      background: var(--paper);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
 
-        .service-checkboxes {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.25rem; /* Reduced gap further */
-            margin-bottom: 0.5rem;
-            font-size: 0.8rem;
-        }
-        .service-checkboxes label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-        .service-checkboxes input[type="checkbox"] {
-            margin-right: 0.25rem;
-            width: 14px;
-            height: 14px;
-            border: 2px solid #0044cb;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            outline: none;
-            cursor: pointer;
-            position: relative;
-        }
-        .service-checkboxes input[type="checkbox"]:checked:after {
-            content: '✔';
-            color: white;
-            background-color: #0044cb;
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            line-height: 1;
-        }
-        
-        /* Mobile-specific adjustments */
-        @media (max-width: 768px) {
-            .container {
-                max-height: calc(100vh - 120px); /* Adjust height to make sure footer is visible */
-            }
-            .service-checkboxes {
-                font-size: 0.75rem;
-            }
-            .contact-form input, .contact-form textarea {
-                font-size: 0.8rem;
-                padding: 0.4rem;
-            }
-        }
-    </style>
+    /* Card container */
+    .card {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 1.25rem;
+      background: var(--paper);
+      box-shadow: 8px 8px 0 0 var(--brand);
+      max-width: 640px;
+      width: min(92vw, 640px);
+      border: 2px solid var(--brand);
+      max-height: 80vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-sizing: border-box;
+      margin-inline: auto;
+    }
+
+    /* Contact form */
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 2px solid var(--brand);
+      border-radius: 0;
+      font-size: 0.95rem;
+      color: var(--brand);
+      background: var(--paper);
+    }
+    .contact-form button {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--brand);
+      color: var(--paper);
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      transition: transform 80ms ease;
+      font-size: 1rem;
+      font-weight: 700;
+      box-shadow: 4px 4px 0 0 var(--ink/0.1);
+    }
+    .contact-form button:hover { transform: translate(2px, 2px); }
+
+    /* === Services layout (two rows; originals stay on first row) === */
+    .service-checkboxes { display:flex; flex-direction:column; gap:0.35rem; align-items:center; justify-content:center; }
+    .service-row { display:flex; flex-wrap:nowrap; gap:0.75rem; justify-content:center; }
+    .service-row label { display:flex; align-items:center; gap:0.35rem; }
+    .service-checkboxes input[type="checkbox"] {
+      appearance: none; width: 16px; height: 16px; border: 2px solid var(--brand); display: inline-grid; place-content: center;
+    }
+    .service-checkboxes input[type="checkbox"]:checked { background: var(--brand); color: #fff; }
+    .service-checkboxes input[type="checkbox"]:checked::after { content: "✔"; font-size: 12px; line-height: 1; }
+
+    /* Fly */
+    .fly {
+      position: fixed;
+      inset: 0; /* allow transform-origin from center */
+      width: 40px; height: 40px;
+      transform: translate3d(-50%, -50%, 0);
+      will-change: transform;
+      display: grid; place-items: center;
+      z-index: 100; pointer-events: none;
+    }
+    .fly img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff); }
+
+    /* Trail */
+    #fly-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 90; }
+
+    /* Reduced motion: keep brand but stop animation for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .fly, #fly-trail { display: none !important; }
+      body { overflow: auto; }
+    }
+
+    @media (max-width: 768px) {
+      .card { max-height: calc(100vh - 120px); }
+      /* If the screen is extremely narrow, allow the first row to wrap gracefully */
+      .service-row { flex-wrap: wrap; }
+    }
+  </style>
 </head>
 <body>
-    <header class="w-full p-2 text-center bg-white shadow-md z-20 border-b-2 border-[#0044cb]">
-        <img src="https://i.ibb.co/DDNShDkV/onthewall-circle.png" alt="ONTHEWALL Logo" class="h-12 mx-auto w-auto">
-    </header>
+  <!-- Header (landing zone for the fly) -->
+  <header class="w-full p-2 text-center bg-white shadow-md z-20 border-b-2 border-[#0044cb]" data-landing-zone>
+    <img src="https://i.ibb.co/DDNShDkV/onthewall-circle.png" alt="ONTHEWALL logo" width="48" height="48" class="h-12 mx-auto w-auto" />
+  </header>
 
-    <svg id="fly-trail" style="position:absolute;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:90;">
-        <path id="trail-path-stroke"
-            d=""
-            stroke="white"
-            stroke-width="8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            fill="none"
-        />
-        <path id="trail-path"
-            d=""
-            stroke="#0044cb"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-dasharray="8 8"
-            fill="none"
-        />
-    </svg>
+  <!-- SVG trail -->
+  <svg id="fly-trail" aria-hidden="true">
+    <path id="trail-path-stroke" d="" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <path id="trail-path" d="" stroke="var(--brand)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 8" fill="none" />
+  </svg>
 
-    <div class="fly">
-        <img src="https://i.ibb.co/tP2gP6p7/fly-vector.webp" alt="Flying element icon" onerror="this.src='https://placehold.co/40x40/0044cb/ffffff?text=Fly'">
-    </div>
+  <!-- The fly -->
+  <div class="fly" aria-hidden="true" id="fly">
+    <img src="https://i.ibb.co/tP2gP6p7/fly-vector.webp" alt="Decorative fly" />
+  </div>
 
-    <div class="main-content-wrapper">
-        <div class="container">
-            <h1 class="text-2xl md:text-3xl font-extrabold mb-2 text-[#0044cb]">ONTHEWALL</h1>
-            <div class="flex flex-wrap justify-center items-center gap-1 mb-4 text-xs md:text-base font-bold">
-                <span>DESIGN</span>
-                <span>DIGITAL MARKETING</span>
-                <span>WEB DEVELOPMENT</span>
-            </div>
-            <p class="mb-4 text-sm text-gray-800">
-                Ready to take your brand to the next level?
-            </p>
-            <form class="contact-form flex flex-col items-center justify-center space-y-2 my-2" action="#" method="POST">
-                <input type="text" placeholder="YOUR NAME" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
-                <input type="text" placeholder="YOUR COMPANY" class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
-                <input type="email" placeholder="YOUR EMAIL ADDRESS" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none">
-                <textarea placeholder="YOUR MESSAGE" rows="3" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none"></textarea>
-                
-                <h3 class="text-sm font-bold mb-1">Interested in:</h3>
-                <div class="service-checkboxes mb-2">
-                    <label>
-                        <input type="checkbox" name="services" value="Brand Design">
-                        Brand Design
-                    </label>
-                    <label>
-                        <input type="checkbox" name="services" value="SEO">
-                        SEO
-                    </label>
-                    <label>
-                        <input type="checkbox" name="services" value="UX/UI">
-                        UX/UI
-                    </label>
-                    <label>
-                        <input type="checkbox" name="services" value="Web Development">
-                        Web Development
-                    </label>
-                </div>
-                
-                <button type="submit">SUBMIT</button>
-            </form>
+  <main class="grid place-items-center">
+    <section class="card" data-landing-zone>
+      <h1 class="text-2xl md:text-3xl font-extrabold mb-2 text-[#0044cb]">ONTHEWALL</h1>
+      <div class="flex flex-wrap justify-center items-center gap-1 mb-4 text-xs md:text-base font-bold">
+        <span>DESIGN</span><span>DIGITAL MARKETING</span><span>WEB DEVELOPMENT</span>
+      </div>
+      <p class="mb-4 text-sm text-slate-800">Ready to take your brand to the next level?</p>
+
+      <form id="contact-form" class="contact-form grid gap-2 my-2" method="POST" action="#" novalidate>
+        <div class="text-left">
+          <label for="name" class="sr-only">Your name</label>
+          <input id="name" name="name" type="text" placeholder="YOUR NAME" required autocomplete="name" class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none" />
         </div>
-    </div>
-
-    <!-- The footer is now styled to be more compact on mobile -->
-    <footer class="w-full p-2 text-[#0044cb] bg-white text-xs md:text-sm z-20 border-t-2 border-[#0044cb]">
-        <div class="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
-            <div class="mb-1 md:mb-0">
-                <a href="mailto:info@onthewall.com" class="hover:underline">INFO@ONTHEWALL.SITE</a>
-            </div>
-            <div class="flex space-x-2 mb-1 md:mb-0">
-                <a href="#" aria-label="Twitter" class="hover:opacity-75">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.564-2.005.974-3.127 1.195a4.959 4.959 0 00-8.465 4.523c-4.156-.21-7.864-2.203-10.334-5.23a4.962 4.962 0 00-.665 2.477c0 1.716.87 3.232 2.188 4.128a4.92 4.92 0 01-2.23-.616v.06a4.96 4.96 0 003.982 4.862 4.93 4.93 0 01-2.221.084 4.96 4.96 0 004.624 3.447A9.974 9.974 0 010 20.375a14.075 14.075 0 007.64 2.24c9.165 0 14.186-7.593 14.186-14.186 0-.216-.005-.432-.015-.646a10.172 10.172 0 002.493-2.583z"/>
-                    </svg>
-                </a>
-                <a href="#" aria-label="Instagram" class="hover:opacity-75">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2.163c3.204 0 3.584.013 4.85.074 1.22.062 1.83.255 2.228.41a3.527 3.527 0 011.916 1.916c.155.398.348 1.008.41 2.228.061 1.266.074 1.646.074 4.85s-.013 3.584-.074 4.85c-.062 1.22-.255 1.83-.41 2.228a3.527 3.527 0 01-1.916 1.916c-.398.155-1.008.348-2.228.41-.061 1.266-.074 1.646-.074 4.85s.013 3.584.074 4.85c.062 1.22.255 1.83.41 2.228a3.527 3.527 0 011.916-1.916c.398-.155 1.008-.348 2.228-.41C8.416 2.176 8.796 2.163 12 2.163zm0-2.163c-3.298 0-3.682.013-4.996.074-1.28.062-2.15.267-2.903.555a5.523 5.523 0 00-2.02 1.139C.493 2.946.25 3.843.14 5.093c-.061 1.31-.074 1.693-.074 4.996s.013 3.682.074 4.996c.061 1.31.256 2.18.555 2.903a5.523 5.523 0 001.139 2.02c.723.299 1.593.542 2.903.603 1.31.061 1.693.074 4.996.074s3.682-.013 4.996-.074c1.31-.061 2.18-.256 2.903-.555a5.523 5.523 0 002.02-1.139c.847-.487 1.36-.888 1.603-1.286.299-.723.542-1.593.603-2.903.061-1.31.074-1.693.074-4.996s-.013-3.682-.074-4.996c-.061-1.31-.256-2.18-.555-2.903a5.523 5.523 0 00-1.139-2.02C21.054.493 20.157.25 18.907.14c-1.31-.061-1.693-.074-4.996-.074zm-2 2.883a7.117 7.117 0 110 14.234A7.117 7.117 0 0110 5.047zm0 2.138a4.979 4.979 0 100 9.957 4.979 4.979 0 000-9.957zm6.758-.513a1.267 1.267 0 110 2.534 1.267 1.267 0 010-2.534z"/>
-                    </svg>
-                </a>
-                <a href="#" aria-label="LinkedIn" class="hover:opacity-75">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22.23 0H1.77A1.77 1.77 0 000 1.77v20.46A1.77 1.77 0 001.77 24h20.46A1.77 1.77 0 0024 22.23V1.77A1.77 1.77 0 0022.23 0zM7.05 20.46H3.5V9h3.55v11.46zM5.27 7.55c-1.16 0-2.1-.94-2.1-2.1 0-1.16.94-2.1 2.1-2.1s2.1.94 2.1 2.1c0 1.16-.94 2.1-2.1 2.1zm15.19 12.91h-3.55V14c0-1.3-.47-2.19-1.61-2.19-1.22 0-1.94.85-1.94 2.16v6.5h-3.56s.05-10.45 0-11.46H14.1s.05 1.58 0 2.5v.1c.54-.78 1.49-1.9 3.37-1.9 2.45 0 4.2 1.63 4.2 5.17v5.59z"/>
-                    </svg>
-                </a>
-            </div>
-            <div class="mt-1 md:mt-0">
-                &copy; 2025 ONTHEWALL. All Rights Reserved.
-            </div>
+        <div class="text-left">
+          <label for="company" class="sr-only">Your company</label>
+          <input id="company" name="company" type="text" placeholder="YOUR COMPANY" autocomplete="organization" class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none" />
         </div>
-    </footer>
+        <div class="text-left">
+          <label for="email" class="sr-only">Your email address</label>
+          <input id="email" name="email" type="email" placeholder="YOUR EMAIL ADDRESS" required autocomplete="email" inputmode="email" class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none" />
+        </div>
+        <div class="text-left">
+          <label for="message" class="sr-only">Your message</label>
+          <textarea id="message" name="message" placeholder="YOUR MESSAGE" rows="3" required class="focus:ring-2 focus:ring-[#0044cb] focus:outline-none"></textarea>
+        </div>
 
-    <script>
-        const fly = document.querySelector('.fly');
-        const trailPath = document.getElementById('trail-path');
-        const trailPathStroke = document.getElementById('trail-path-stroke');
-        
-        let flyX = window.innerWidth / 2;
-        let flyY = window.innerHeight / 2;
-        let vx = (Math.random() - 0.5) * 2;
-        let vy = (Math.random() - 0.5) * 2;
-        
-        const maxSpeed = 2;
-        const acceleration = 0.05;
-        const friction = 0.98;
+        <fieldset aria-labelledby="services-label" class="text-center">
+          <legend id="services-label" class="text-sm font-bold mb-1">Interested in:</legend>
+          <div class="service-checkboxes">
+            <div class="service-row service-row-1">
+              <label><input type="checkbox" name="services" value="Brand Design" /> Brand Design</label>
+              <label><input type="checkbox" name="services" value="SEO" /> SEO</label>
+              <label><input type="checkbox" name="services" value="UX/UI" /> UX/UI</label>
+              <label><input type="checkbox" name="services" value="Web Development" /> Web Development</label>
+            </div>
+            <div class="service-row service-row-2">
+              <label><input type="checkbox" name="services" value="Content Creation" /> Content Creation</label>
+              <label><input type="checkbox" name="services" value="Advertising" /> Advertising</label>
+              <label><input type="checkbox" name="services" value="Email Marketing" /> Email Marketing</label>
+              <label><input type="checkbox" name="services" value="Analytics" /> Analytics</label>
+            </div>
+          </div>
+        </fieldset>
 
-        let cursorX = flyX;
-        let cursorY = flyY;
-        
-        const repelRadius = 150;
-        const repelForce = 10;
+        <button type="submit" aria-label="Submit contact form">SUBMIT</button>
+        <p id="form-status" class="text-xs text-slate-600" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
 
-        window.addEventListener('mousemove', (e) => {
-            cursorX = e.clientX;
-            cursorY = e.clientY;
-        });
-        
-        const trailPoints = [];
-        const numTrailPoints = 25;
-        
-        const elasticity = 0.25; 
-        
-        for (let i = 0; i < numTrailPoints; i++) {
-            trailPoints.push({ x: flyX, y: flyY });
+  <footer class="w-full p-2 text-[#0044cb] bg-white text-xs md:text-sm z-20 border-t-2 border-[#0044cb]" data-landing-zone>
+    <div class="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto gap-2">
+      <div>
+        <a href="mailto:info@onthewall.site" class="hover:underline">INFO@ONTHEWALL.SITE</a>
+      </div>
+      <nav class="flex gap-3" aria-label="Social links">
+        <a href="#" aria-label="Twitter" class="hover:opacity-75">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.564-2.005.974-3.127 1.195a4.959 4.959 0 00-8.465 4.523c-4.156-.21-7.864-2.203-10.334-5.23a4.962 4.962 0 00-.665 2.477c0 1.716.87 3.232 2.188 4.128a4.92 4.92 0 01-2.23-.616v.06a4.96 4.96 0 003.982 4.862 4.93 4.93 0 01-2.221.084 4.96 4.96 0 004.624 3.447A9.974 9.974 0 010 20.375a14.075 14.075 0 007.64 2.24c9.165 0 14.186-7.593 14.186-14.186 0-.216-.005-.432-.015-.646a10.172 10.172 0 002.493-2.583z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="hover:opacity-75">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <circle cx="12" cy="12" r="5" fill="currentColor" />
+            <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" />
+          </svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="hover:opacity-75">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22.23 0H1.77A1.77 1.77 0 000 1.77v20.46A1.77 1.77 0 001.77 24h20.46A1.77 1.77 0 0024 22.23V1.77A1.77 1.77 0 0022.23 0zM7.05 20.46H3.5V9h3.55v11.46zM5.27 7.55c-1.16 0-2.1-.94-2.1-2.1 0-1.16.94-2.1 2.1-2.1s2.1.94 2.1 2.1c0 1.16-.94 2.1-2.1 2.1zm15.19 12.91h-3.55V14c0-1.3-.47-2.19-1.61-2.19-1.22 0-1.94.85-1.94 2.16v6.5h-3.56s.05-10.45 0-11.46H14.1s.05 1.58 0 2.5v.1c.54-.78 1.49-1.9 3.37-1.9 2.45 0 4.2 1.63 4.2 5.17v5.59z"/></svg>
+        </a>
+      </nav>
+      <div>&copy; <span id="year"></span> ONTHEWALL. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script type="module">
+    // ===== Utilities =====
+    const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+    const rand = (min, max) => Math.random() * (max - min) + min;
+
+    // Lightweight 2D value noise (smooth drift)
+    function valueNoise2D(x, y) {
+      const x0 = Math.floor(x), y0 = Math.floor(y);
+      const x1 = x0 + 1, y1 = y0 + 1;
+      const sx = x - x0, sy = y - y0;
+      const h = (i, j) => {
+        // pseudo-random but deterministic per integer lattice point
+        const n = i * 374761393 + j * 668265263; // large primes
+        const a = (n ^ (n << 13)) >>> 0;
+        return (a * 1274126177 >>> 0) / 0xffffffff; // [0,1)
+      };
+      const v00 = h(x0, y0), v10 = h(x1, y0), v01 = h(x0, y1), v11 = h(x1, y1);
+      const lerp = (a,b,t) => a + (b - a) * (t * t * (3 - 2 * t)); // smoothstep
+      const ix0 = lerp(v00, v10, sx);
+      const ix1 = lerp(v01, v11, sx);
+      return lerp(ix0, ix1, sy) * 2 - 1; // [-1,1]
+    }
+
+    // ===== DOM refs =====
+    const fly = document.getElementById('fly');
+    const img = fly.querySelector('img');
+    const trail = document.getElementById('fly-trail');
+    const trailPath = document.getElementById('trail-path');
+    const trailStroke = document.getElementById('trail-path-stroke');
+    const landingZones = Array.from(document.querySelectorAll('[data-landing-zone]'));
+
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ===== Motion model (housefly-inspired) =====
+    // Mix of noise-driven drift, short saccades, occasional land+groom pauses.
+    // References: observed fly behavior — bursty motion, edge following, frequent stops.
+
+    const state = {
+      x: innerWidth / 2,
+      y: innerHeight / 2,
+      z: 0, // depth for subtle scale (perspective)
+      vx: rand(-0.5, 0.5),
+      vy: rand(-0.5, 0.5),
+      speedMaxCruise: 1.8,
+      speedMaxBurst: 5.0,
+      friction: 0.985,
+      mode: 'cruise', // 'cruise' | 'saccade' | 'landed'
+      modeUntil: 0,
+      headingJitter: 0,
+      lastTrailAt: 0,
+    };
+
+    let cursor = {x: state.x, y: state.y};
+    const repelRadius = 140;
+    const repelForce = 120; // pixels/s^2 when very close
+
+    // Trail points
+    const trailPts = Array.from({ length: 20 }, () => ({ x: state.x, y: state.y }));
+    const elasticity = 0.25;
+
+    // Resize cache
+    let vw = innerWidth, vh = innerHeight;
+    addEventListener('resize', () => { vw = innerWidth; vh = innerHeight; });
+
+    // Cursor repel (passive listener for perf)
+    addEventListener('mousemove', (e) => { cursor.x = e.clientX; cursor.y = e.clientY; }, { passive: true });
+
+    // Prefer reduced motion: bail out gracefully
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduced.matches) { /* hidden via CSS */ }
+
+    // Landing logic: occasionally choose a zone and perch
+    function maybeLand(now) {
+      if (state.mode !== 'cruise') return;
+      if (Math.random() < 0.003) { // ~0.3% chance per frame
+        const zone = landingZones[Math.floor(Math.random() * landingZones.length)];
+        const rect = zone.getBoundingClientRect();
+        const pad = 20;
+        const tx = clamp(rand(rect.left + pad, rect.right - pad), 20, vw - 20);
+        const ty = clamp(rand(rect.top + pad, rect.bottom - pad), 20, vh - 20);
+        state.mode = 'saccade';
+        state.modeUntil = now + 180 + Math.random() * 220; // short dart to target
+        // Velocity toward target (burst)
+        const dx = tx - state.x, dy = ty - state.y;
+        const d = Math.hypot(dx, dy) || 1;
+        const s = state.speedMaxBurst;
+        state.vx = (dx / d) * s; state.vy = (dy / d) * s;
+        // After the dart, switch to landed for grooming pause
+        setTimeout(() => {
+          state.mode = 'landed';
+          state.modeUntil = performance.now() + 600 + Math.random() * 1200; // 0.6–1.8s
+          state.vx = 0; state.vy = 0;
+        }, state.modeUntil - now);
+      }
+    }
+
+    // Update physics each frame
+    let t0 = performance.now();
+    function step(now) {
+      const dt = Math.min(32, now - t0) / 1000; // seconds, clamp to avoid big jumps
+      t0 = now;
+
+      // Mode transitions
+      if (state.mode === 'landed') {
+        if (now >= state.modeUntil) {
+          // Take off with a small burst, random heading
+          const angle = Math.random() * Math.PI * 2;
+          const s = rand(2.5, state.speedMaxBurst);
+          state.vx = Math.cos(angle) * s; state.vy = Math.sin(angle) * s;
+          state.mode = 'cruise';
+          state.modeUntil = now + rand(1800, 4000);
         }
-        
-        let isFlying = true;
-        let stoppedTime = 0;
-        const minStoppedDuration = 1000;
-        const maxStoppedDuration = 3000;
-        let stopDuration = 0;
-        let scaleEffect = 1;
-        const maxScale = 1.2;
-        const edgeProximity = 100;
-        
-        function animate() {
-            if (isFlying) {
-                vx *= friction;
-                vy *= friction;
-                
-                flyX += vx;
-                flyY += vy;
+      } else if (state.mode === 'saccade') {
+        if (now >= state.modeUntil) {
+          // allow next phase to be scheduled by maybeLand()
+        }
+      } else if (state.mode === 'cruise') {
+        if (now >= state.modeUntil) {
+          // Schedule next chance for a bursty saccade
+          state.modeUntil = now + rand(800, 2200);
+        }
+      }
 
-                const dxCursor = flyX - cursorX;
-                const dyCursor = flyY - cursorY;
-                const distance = Math.sqrt(dxCursor * dxCursor + dyCursor * dyCursor);
+      if (state.mode !== 'landed') {
+        // Noise-driven drift
+        const n1 = valueNoise2D(now * 0.0007, 0.0);
+        const n2 = valueNoise2D(0.0, now * 0.0013);
+        const ax = n1 * 40; // px/s^2
+        const ay = n2 * 40;
+        state.vx += ax * dt;
+        state.vy += ay * dt;
 
-                if (distance < repelRadius) {
-                    const repelDirectionX = dxCursor / distance;
-                    const repelDirectionY = dyCursor / distance;
-                    const dynamicRepelForce = repelForce * (1 - distance / repelRadius);
-                    vx += repelDirectionX * dynamicRepelForce;
-                    vy += repelDirectionY * dynamicRepelForce;
-                } else {
-                    vx += (Math.random() - 0.5) * acceleration;
-                    vy += (Math.random() - 0.5) * acceleration;
-                }
-                
-                const currentSpeed = Math.sqrt(vx * vx + vy * vy);
-                if (currentSpeed > maxSpeed) {
-                    vx = (vx / currentSpeed) * maxSpeed;
-                    vy = (vy / currentSpeed) * maxSpeed;
-                }
-
-                const flyWidth = fly.offsetWidth;
-                const flyHeight = fly.offsetHeight;
-                
-                let isNearEdge = false;
-                
-                if (flyX <= flyWidth / 2 || flyX >= window.innerWidth - flyWidth / 2) {
-                    vx *= -1;
-                    vx += (Math.random() - 0.5) * 0.5;
-                    flyX = Math.max(flyWidth / 2, Math.min(flyX, window.innerWidth - flyWidth / 2));
-                    isNearEdge = true;
-                }
-                if (flyY <= flyHeight / 2 || flyY >= window.innerHeight - flyHeight / 2) {
-                    vy *= -1;
-                    vy += (Math.random() - 0.5) * 0.5;
-                    flyY = Math.max(flyHeight / 2, Math.min(flyY, window.innerHeight - flyHeight / 2));
-                    isNearEdge = true;
-                }
-
-                if (isNearEdge) {
-                    scaleEffect = maxScale;
-                } else {
-                    scaleEffect += (1 - scaleEffect) * 0.1;
-                }
-
-                if (Math.random() < 0.005) {
-                    isFlying = false;
-                    vx = 0;
-                    vy = 0;
-                    stoppedTime = performance.now();
-                    stopDuration = minStoppedDuration + Math.random() * (maxStoppedDuration - minStoppedDuration);
-                }
-
-            } else {
-                scaleEffect += (1 - scaleEffect) * 0.1;
-
-                if (performance.now() - stoppedTime > stopDuration) {
-                    isFlying = true;
-                    vx = (Math.random() - 0.5) * 2;
-                    vy = (Math.random() - 0.5) * 2;
-                }
-            }
-            
-            const angle = Math.atan2(flyY - trailPoints[0].y, flyX - trailPoints[0].x);
-            const angleInDegrees = (angle * 180 / Math.PI) + 90;
-            fly.style.transform = `translate(-50%, -50%) rotate(${angleInDegrees}deg) scale(${scaleEffect})`;
-            
-            fly.style.left = `${flyX}px`;
-            fly.style.top = `${flyY}px`;
-            
-            trailPoints[0].x += (flyX - trailPoints[0].x) * elasticity;
-            trailPoints[0].y += (flyY - trailPoints[0].y) * elasticity;
-            
-            for (let i = 1; i < numTrailPoints; i++) {
-                const prevPoint = trailPoints[i - 1];
-                const currentPoint = trailPoints[i];
-                
-                currentPoint.x += (prevPoint.x - currentPoint.x) * elasticity;
-                currentPoint.y += (prevPoint.y - currentPoint.y) * elasticity;
-            }
-            
-            let pathData = `M ${trailPoints[0].x} ${trailPoints[0].y}`;
-            for (let i = 1; i < numTrailPoints; i++) {
-                pathData += ` L ${trailPoints[i].x} ${trailPoints[i].y}`;
-            }
-            trailPath.setAttribute('d', pathData);
-            trailPathStroke.setAttribute('d', pathData);
-
-            requestAnimationFrame(animate);
+        // Occasional saccadic jerk
+        if (Math.random() < 0.02) {
+          const ang = rand(-Math.PI, Math.PI);
+          const mag = rand(0.5, 1.5) * state.speedMaxBurst;
+          state.vx += Math.cos(ang) * mag;
+          state.vy += Math.sin(ang) * mag;
         }
 
-        window.addEventListener('resize', () => {
-            for (let i = 0; i < numTrailPoints; i++) {
-                trailPoints[i].x = window.innerWidth / 2;
-                trailPoints[i].y = window.innerHeight / 2;
-            }
-            flyX = window.innerWidth / 2;
-            flyY = window.innerHeight / 2;
-        });
+        // Repel from cursor
+        const dx = state.x - cursor.x, dy = state.y - cursor.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < repelRadius) {
+          const k = (1 - dist / repelRadius) * repelForce;
+          state.vx += (dx / (dist || 1)) * k * dt;
+          state.vy += (dy / (dist || 1)) * k * dt;
+        }
 
-        window.onload = function() {
-            animate();
-        };
-    </script>
+        // Friction and speed clamp
+        const maxS = (state.mode === 'saccade') ? state.speedMaxBurst : state.speedMaxCruise;
+        state.vx *= state.friction; state.vy *= state.friction;
+        const sp = Math.hypot(state.vx, state.vy);
+        if (sp > maxS) { state.vx = (state.vx / sp) * maxS; state.vy = (state.vy / sp) * maxS; }
+
+        // Integrate
+        state.x += state.vx; state.y += state.vy;
+
+        // Boundary bounce + edge-follow bias
+        const margin = 20;
+        if (state.x < margin || state.x > innerWidth - margin) {
+          state.vx *= -0.9; state.x = clamp(state.x, margin, innerWidth - margin); state.vy += rand(-0.6, 0.6) * state.speedMaxCruise;
+        }
+        if (state.y < margin || state.y > innerHeight - margin) {
+          state.vy *= -0.9; state.y = clamp(state.y, margin, innerHeight - margin); state.vx += rand(-0.6, 0.6) * state.speedMaxCruise;
+        }
+
+        // Depth wobble -> scale
+        state.z += valueNoise2D(now * 0.001, now * 0.0012) * 0.003;
+        state.z = clamp(state.z, -0.15, 0.15);
+      }
+
+      // Maybe land
+      maybeLand(now);
+
+      // Orientation + jitter
+      const angle = Math.atan2(state.vy, state.vx) + Math.PI / 2;
+      const jitter = rand(-0.15, 0.15);
+      const scale = 1 + state.z + (state.mode === 'saccade' ? 0.08 : 0);
+      fly.style.transform = `translate3d(${state.x}px, ${state.y}px, 0) translate(-50%, -50%) rotate(${(angle + jitter) * 180 / Math.PI}deg) scale(${scale.toFixed(3)})`;
+
+      // Wing buzz micro-wobble
+      img.style.transform = `translateZ(0) scale(${1 + Math.sin(now * 0.05) * 0.02})`;
+
+      // Trail
+      if ((now | 0) % 2 === 0) {
+        trailPts[0].x += (state.x - trailPts[0].x) * elasticity;
+        trailPts[0].y += (state.y - trailPts[0].y) * elasticity;
+        for (let i = 1; i < trailPts.length; i++) {
+          const p = trailPts[i], q = trailPts[i-1];
+          p.x += (q.x - p.x) * elasticity;
+          p.y += (q.y - p.y) * elasticity;
+        }
+        let d = `M ${trailPts[0].x.toFixed(1)} ${trailPts[0].y.toFixed(1)}`;
+        for (let i = 1; i < trailPts.length; i++) d += ` L ${trailPts[i].x.toFixed(1)} ${trailPts[i].y.toFixed(1)}`;
+        trailPath.setAttribute('d', d);
+        trailStroke.setAttribute('d', d);
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+
+    // ===== Form handling =====
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const required = ['name','email','message'];
+      for (const k of required) { if (!data.get(k)) { status.textContent = 'Please fill in all required fields.'; return; } }
+      status.textContent = 'Thanks! Your message has been captured (demo).';
+      form.reset();
+    });
+  </script>
 </body>
 </html>
