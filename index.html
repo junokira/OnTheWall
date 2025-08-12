@@ -18,9 +18,9 @@
     <meta name="robots" content="index,follow">
     
     <!-- Favicon Set -->
-    <link rel="icon" type="image/webp" href="https://i.ibb.co/vC8hprQX/shadesss.webp">
-    <link rel="shortcut icon" href="https://i.ibb.co/vC8hprQX/shadesss.webp" type="image/webp">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/vC8hprQX/shadesss.webp">
+    <link rel="icon" type="image/webp" href="https://i.ibb.co/b5kygJZz/blue-flyyyy.webp">
+    <link rel="shortcut icon" href="https://i.ibb.co/b5kygJZz/blue-flyyyy.webp" type="image/webp">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/b5kygJZz/blue-flyyyy.webp">
 
     <!-- Open Graph (Facebook, LinkedIn) -->
     <meta property="og:title" content="OnTheWall — Digital Marketing & Brand Design">
@@ -295,22 +295,22 @@
             <p class="mb-4 text-sm md:text-lg text-gray-800">Ready to take your brand to the next level?</p>
 
             <!-- Contact Form -->
-            <form class="space-y-3" action="#" method="POST">
+            <form class="space-y-3" action="https://formspree.io/f/xkgzyqqe" method="POST">
                 <div class="relative">
                     <label for="name" class="sr-only">Your Name</label>
-                    <input type="text" id="name" placeholder="YOUR NAME" required class="brutalist-input w-full p-2">
+                    <input type="text" id="name" name="name" placeholder="YOUR NAME" required class="brutalist-input w-full p-2">
                 </div>
                 <div class="relative">
                     <label for="company" class="sr-only">Your Company</label>
-                    <input type="text" id="company" placeholder="YOUR COMPANY" required class="brutalist-input w-full p-2">
+                    <input type="text" id="company" name="company" placeholder="YOUR COMPANY" required class="brutalist-input w-full p-2">
                 </div>
                 <div class="relative">
                     <label for="email" class="sr-only">Your Email Address</label>
-                    <input type="email" id="email" placeholder="YOUR EMAIL ADDRESS" required class="brutalist-input w-full p-2">
+                    <input type="email" id="email" name="email" placeholder="YOUR EMAIL ADDRESS" required class="brutalist-input w-full p-2">
                 </div>
                 <div class="relative">
                     <label for="message" class="sr-only">Your Message</label>
-                    <textarea id="message" placeholder="YOUR MESSAGE" required rows="3" class="brutalist-textarea w-full p-2 resize-none"></textarea>
+                    <textarea id="message" name="message" placeholder="YOUR MESSAGE" required rows="3" class="brutalist-textarea w-full p-2 resize-none"></textarea>
                 </div>
                 
                 <!-- Checkboxes for services -->
@@ -318,19 +318,19 @@
                     <p class="mb-2 md:mb-0 text-sm">Interested in:</p>
                     <div class="flex flex-wrap gap-2 justify-center">
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="interest" value="brand_design" class="brutalist-checkbox">
+                            <input type="checkbox" name="interests[]" value="brand_design" class="brutalist-checkbox">
                             <span class="text-xs">Brand Design</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="interest" value="seo" class="brutalist-checkbox">
+                            <input type="checkbox" name="interests[]" value="seo" class="brutalist-checkbox">
                             <span class="text-xs">SEO</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="interest" value="ux_ui" class="brutalist-checkbox">
+                            <input type="checkbox" name="interests[]" value="ux_ui" class="brutalist-checkbox">
                             <span class="text-xs">UX/UI</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="interest" value="web_development" class="brutalist-checkbox">
+                            <input type="checkbox" name="interests[]" value="web_development" class="brutalist-checkbox">
                             <span class="text-xs">Web Dev</span>
                         </label>
                     </div>
