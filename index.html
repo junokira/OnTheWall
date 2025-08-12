@@ -45,6 +45,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            /* Removed the drop-shadow for the glow effect */
         }
         
         /* Styles for the main content container - Brutalist Design */
@@ -52,7 +53,6 @@
             text-align: center;
             padding: 1rem; 
             background-color: white;
-            box-shadow: 6px 6px 0px 0px #0044cb; 
             max-width: 600px;
             width: 90%;
             border: 2px solid #0044cb;
@@ -65,7 +65,8 @@
                 padding: 1rem;
             }
             .container {
-                padding: 4rem;
+                /* Reduced padding from 4rem to 2rem */
+                padding: 2rem;
             }
         }
 
@@ -89,7 +90,6 @@
             border: none;
             cursor: pointer;
             font-weight: 700;
-            box-shadow: 4px 4px 0px 0px #0044cb;
         }
         .brutalist-button:hover {
             background-color: #0033a0;
@@ -124,9 +124,19 @@
     </style>
 </head>
 <body>
-    <!-- The SVG trail is placed BEFORE the fly div and has a lower z-index to ensure it is always behind it -->
+    <!-- The SVG trail is now two paths to create the stroke effect -->
     <svg id="fly-trail" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:90;">
-        <path id="trail-path"
+        <!-- The white stroke path, drawn first to be underneath -->
+        <path id="trail-path-stroke"
+            d=""
+            stroke="white"
+            stroke-width="8"
+            stroke-linecap="round"
+            stroke-dasharray="8 8"
+            fill="none"
+        />
+        <!-- The main blue trail path, drawn on top -->
+        <path id="trail-path-main"
             d=""
             stroke="#0044cb"
             stroke-width="4"
@@ -145,11 +155,11 @@
     <main class="flex-grow flex items-center justify-center w-full">
         <div class="container">
             <!-- Logo image -->
-            <img src="https://i.ibb.co/zTkZbt2Q/wallvec.webp" alt="ONTHEWALL Logo" class="h-16 mx-auto w-auto mb-4">
+            <img src="https://i.ibb.co/zTkZbt2Q/wallvec.webp" alt="ONTHEWALL Logo" class="h-24 mx-auto w-auto mb-2">
             <!-- Company Name -->
-            <h1 class="text-3xl md:text-5xl font-extrabold mb-2 text-[#0044cb]">ONTHEWALL</h1>
-            <!-- Company Tagline - Made the font size even smaller on mobile -->
-            <p class="text-sm md:text-2xl mb-4 text-[#0044cb] font-bold">DESIGN | DIGITAL MARKETING | WEB DEVELOPMENT</p>
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-2 text-[#0044cb]">OnTheWall</h1>
+            <!-- Company Tagline -->
+            <p class="text-sm md:text-2xl mb-2 text-[#0044cb] font-bold">DESIGN | DIGITAL MARKETING | WEB DEVELOPMENT</p>
             <!-- Call to action for the form -->
             <p class="mb-4 text-sm md:text-lg text-gray-800">Ready to take your brand to the next level?</p>
 
@@ -193,7 +203,7 @@
         <div class="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
             <!-- Email link -->
             <div class="mb-2 md:mb-0">
-                <a href="mailto:info@onthewall.com" class="hover:underline">INFO@ONTHEWALL.COM</a>
+                <a href="mailto:info@onthewall.site" class="hover:underline">INFO@ONTHEWALL.SITE</a>
             </div>
             
             <!-- Social media icons -->
@@ -227,7 +237,7 @@
 
     <script>
         // --- State variables are now declared outside the function for global access ---
-        let fly, trailPath;
+        let fly, trailPathMain, trailPathStroke;
         let flyX, flyY, vx, vy;
         let cursorX, cursorY;
         // Increased the repel radius and force for a stronger avoidance effect
@@ -358,12 +368,13 @@
                 currentPoint.y += (prevPoint.y - currentPoint.y) * elasticity;
             }
 
-            // --- Rebuild the SVG path data ---
+            // --- Rebuild the SVG path data for both strokes ---
             let pathData = `M ${trailPoints[0].x} ${trailPoints[0].y}`;
             for (let i = 1; i < numTrailPoints; i++) {
                 pathData += ` L ${trailPoints[i].x} ${trailPoints[i].y}`;
             }
-            trailPath.setAttribute('d', pathData);
+            trailPathMain.setAttribute('d', pathData);
+            trailPathStroke.setAttribute('d', pathData);
 
             // Request the next animation frame to continue the loop
             requestAnimationFrame(animate);
@@ -384,7 +395,8 @@
         window.onload = function() {
             // Initialize the global variables here
             fly = document.querySelector('.fly');
-            trailPath = document.getElementById('trail-path');
+            trailPathMain = document.getElementById('trail-path-main');
+            trailPathStroke = document.getElementById('trail-path-stroke');
             
             // Initialize the fly's position and trail points here, where window dimensions are final
             flyX = window.innerWidth / 2;
