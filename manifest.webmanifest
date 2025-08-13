@@ -1,0 +1,9 @@
+{
+  "name": "OnTheWall",
+  "short_name": "OnTheWall",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0033cc",
+  "icons": [{ "src": "/wallvec.webp", "sizes": "256x256", "type": "image/webp" }]
+}
