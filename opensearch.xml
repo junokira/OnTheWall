@@ -1,0 +1,5 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>OnTheWall</ShortName>
+  <Description>Search OnTheWall</Description>
+  <Url type="text/html" template="https://onthewall.site/?q={searchTerms}"/>
+</OpenSearchDescription>
