@@ -1,0 +1,4 @@
+Contact: mailto:security@onthewall.site
+Policy: https://onthewall.site/security-policy.pdf
+Preferred-Languages: en
+Encryption: https://keys.openpgp.org/
